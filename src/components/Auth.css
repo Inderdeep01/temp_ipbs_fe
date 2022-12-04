@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap');
+#main{
+    background-image: url('./assets/blockchain.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.bg-glass {
+    background-color: hsla(0, 0%, 100%, 0.5) !important;
+    backdrop-filter: saturate(200%) blur(25px);
+}
+
+#h1{
+    text-shadow: 2px 2px 20px #000;
+    font-family: 'Roboto Mono',monospace;
+}
+
+#sub{
+    background-color: #1d3557;
+    color: #fff;
+}
+#sub:hover{
+    opacity: 0.85;
+}
+.social{
+    color: #1d3557;
+}
