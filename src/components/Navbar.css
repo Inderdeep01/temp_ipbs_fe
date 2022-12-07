@@ -14,7 +14,7 @@
 }
  
 #login, #signup{
-    font-family: Inconsolata;
+    font-family: 'Roboto Mono',monospace;
     font-size: 1.2rem;
     border: 1px solid;
     border-radius: 10%;

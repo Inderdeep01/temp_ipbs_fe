@@ -1,7 +1,41 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import './Auth.css'
+import axios from 'axios'
+import { useNavigate } from 'react-router'
+import { connect } from 'react-redux'
 
-const Auth = () => {
+const Auth = (props) => {
+  const navigate = useNavigate()
+  useEffect ( ()=>{
+    const sub = document.querySelector('#sub')
+    sub.addEventListener('click',(e)=>{
+    e.preventDefault()
+  })
+  },[])
+  const signup = ()=>{
+    const id = document.querySelector('#id').value
+    const pwd = document.querySelector('#pwd').value
+    const fname = document.querySelector('#fname').value
+    const lname = document.querySelector('#lname').value
+    axios({
+      method:'post',
+      url:'http://localhost:3010/signup',
+      headers:{
+        'content-type':'application/json'
+      },
+      data:{
+        id:id,
+        pwd:pwd,
+        fname,
+        lname
+      }
+    }).then(result=>{
+        props.success(fname?fname:'User')
+        navigate('/')
+        console.log(result)
+      })
+      .catch(err=>console.log(err))
+  }
   return (
     <div id='main'>
     <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
@@ -23,25 +57,25 @@ const Auth = () => {
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <input type="text" id="form3Example1" class="form-control" placeholder='First Name' />
+                    <input type="text" id="fname" class="form-control" placeholder='First Name' />
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <input type="text" id="form3Example2" class="form-control"  placeholder='Last Name'/>
+                    <input type="text" id="lname" class="form-control"  placeholder='Last Name'/>
                   </div>
                 </div>
               </div>
 
               <div class="form-outline mb-4">
-                <input type="email" id="form3Example3" class="form-control" placeholder='someone@example.com' />
+                <input type="email" id="id" class="form-control" placeholder='someone@example.com' />
               </div>
 
               <div class="form-outline mb-4">
-                <input type="password" id="form3Example4" class="form-control" placeholder='Password' />
+                <input type="password" id="pwd" class="form-control" placeholder='Password' />
               </div>
                 <div className='d-grid gap-2 col-6 mx-auto'>
-                <button id='sub' type="submit" class="btn btn-block mb-4 ">
+                <button id='sub' type="submit" class="btn btn-block mb-4" onClick={signup}>
                 Sign up
               </button>
                 </div>
@@ -76,4 +110,10 @@ const Auth = () => {
   )
 }
 
-export default Auth
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    success: (name)=> dispatch( {type:'authenticated',payload:name} )
+  }
+}
+
+export default connect(()=>{return {}},mapDispatchToProps)(Auth)

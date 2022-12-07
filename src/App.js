@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Auth from './components/Auth'
 import Login from './components/Login';
 import Home from './components/Home';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route exact path='/' element = {<Home/>}/>
           <Route exact path='/signup' element = {<Auth/>}/>
           <Route exact path='/login' element = {<Login/>}/>
+          <Route exact path='/profile' element = {<Profile/>}/>
         </Routes>
       </Router>
     </div>
