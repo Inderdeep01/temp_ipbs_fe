@@ -6,7 +6,8 @@ const auth = (state=initialState, action)=>{
     if(action.type === 'authenticated'){
         return {
             isLoggedIn: true,
-            name:action.payload
+            name:action.payload.name,
+            id:action.payload.id
         }
     }
     if(action.type === 'loggedOut'){

@@ -26,10 +26,10 @@ const Login = (props) => {
         pwd:pwd
       }
     }).then(result=>{
-        const user = result.data.user
-        props.success(user)
         navigate('/profile')
         console.log(result)
+        const user = result.data.user
+        props.success(user,id)
       })
       .catch(err=>console.log(err))
   }
@@ -106,7 +106,7 @@ const Login = (props) => {
 
 const mapDispatchToProps = (dispatch)=>{
   return {
-    success: (name)=> dispatch( {type:'authenticated',payload:name} )
+    success: (name,id)=> dispatch( {type:'authenticated',payload:{name,id}} )
   }
 }
 
