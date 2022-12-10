@@ -1,11 +1,31 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import './Auth.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
 import { connect } from 'react-redux'
+import { Modal,Button,Spinner} from 'react-bootstrap'
+import {createRoot} from 'react-dom/client'
 
 const Auth = (props) => {
+  //state and handlers for response modal
+  const [show, setShow] = useState(false)
+  const [variant, setVariant] = useState('success')
   const navigate = useNavigate()
+  const handleClose = () => {
+    setShow(false)
+    if(variant==='success'){
+      navigate('/')
+    }
+    const root = createRoot(document.querySelector('#sub'))
+    root.render(<>Sign up</>)
+  }
+  const handleShow = () => {
+      return new Promise((resolve,reject)=>{
+          setShow(true)
+          setTimeout(resolve,50)
+      })
+  }
+  
   useEffect ( ()=>{
     const sub = document.querySelector('#sub')
     sub.addEventListener('click',(e)=>{
@@ -13,6 +33,14 @@ const Auth = (props) => {
   })
   },[])
   const signup = ()=>{
+    const spinner = (<Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+      </Spinner>)
+    console.log(spinner)
+    const root = createRoot(document.querySelector('#sub'))
+    root.render(spinner)
+    //ReactDOM.render(spinner,document.querySelector('#sub'))
+    //document.querySelector('#sub').innerHTML = spinner
     const id = document.querySelector('#id').value
     const pwd = document.querySelector('#pwd').value
     const fname = document.querySelector('#fname').value
@@ -30,11 +58,35 @@ const Auth = (props) => {
         lname
       }
     }).then(result=>{
+        if(result.status>=200&&result.status<300){
+          setVariant('success')
+        }
+        else{
+          setVariant('danger')
+        }
+        var title = document.createTextNode(result.statusText)
+        var info = document.createTextNode(result.data.msg)
         props.success(fname?fname:'User',id)
-        navigate('/')
+        handleShow().then(()=>{
+          document.getElementById('response-modal-title').appendChild(title)
+          document.getElementById('response-modal-info').appendChild(info)
+          console.log(title)
+          console.log(info)
+        })
+        //navigate('/')
         console.log(result)
       })
-      .catch(err=>console.log(err))
+      .catch(err=>{console.log(err)
+        setVariant('danger')
+        var title = document.createTextNode(err.response.statusText || 'Network Error')
+        var info = document.createTextNode(err.response.data.warning||err.response.data.msg || 'Please check your network ')
+        handleShow().then(()=>{
+          document.getElementById('response-modal-title').appendChild(title)
+          document.getElementById('response-modal-info').appendChild(info)
+          console.log(title)
+          console.log(info)
+        })
+      })
   }
   return (
     <div id='main'>
@@ -45,9 +97,6 @@ const Auth = (props) => {
         Inter-Planetary<br />
           <span style={{color: "#1d3557"}}>Banking System</span>
         </h1>
-        <p className="mb-4 opacity-70" style={{color: "#000000"}}>
-          
-        </p>
       </div>
 
       <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
@@ -105,7 +154,26 @@ const Auth = (props) => {
         </div>
       </div>
     </div>
-  </div>
+    </div>
+    {/*Modal for displaying response */}
+    <Modal
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={show} onHide={handleClose}
+            >
+            <Modal.Header closeButton>
+                <Modal.Title id="response-modal-title">
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p id='response-modal-info'>
+                </p>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant={variant} onClick={handleClose}>Close</Button>
+            </Modal.Footer>
+        </Modal>
     </div>
   )
 }

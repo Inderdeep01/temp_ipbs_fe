@@ -1,18 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { useNavigate } from 'react-router'
 import './Login.css'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { Modal,Button,Spinner} from 'react-bootstrap'
+import {createRoot} from 'react-dom/client'
 
 const Login = (props) => {
   console.log(props)
   const navigate = useNavigate()
+
+  // state and handlers for response modals
+  const [show, setShow] = useState(false)
+  const [variant, setVariant] = useState('success')
+  const handleClose = () => {
+    setShow(false)
+    if(variant==='success'){
+      navigate('/profile')
+    }
+    const root = createRoot(document.querySelector('#sub'))
+    root.render(<>Login</>)
+  }
+  const handleShow = () => {
+      return new Promise((resolve,reject)=>{
+          setShow(true)
+          setTimeout(resolve,50)
+      })
+  }
+
   useEffect(()=>{
       document.querySelector('#sub').addEventListener('click',(e)=>{
       e.preventDefault()
     })
   },[])
   const login = ()=>{
+    const spinner = (<Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+      </Spinner>)
+    console.log(spinner)
+    const root = createRoot(document.querySelector('#sub'))
+    root.render(spinner)
     const id = document.querySelector('#id').value
     const pwd = document.querySelector('#pwd').value
     axios({
@@ -26,12 +53,36 @@ const Login = (props) => {
         pwd:pwd
       }
     }).then(result=>{
-        navigate('/profile')
+        if(result.status>=200&&result.status<300){
+          setVariant('success')
+        }
+        else{
+          setVariant('danger')
+        }
+        var title = document.createTextNode(result.statusText)
+        var info = document.createTextNode(result.data.msg)
+        //navigate('/profile')
         console.log(result)
         const user = result.data.user
         props.success(user,id)
+        handleShow().then(()=>{
+          document.getElementById('response-modal-title').appendChild(title)
+          document.getElementById('response-modal-info').appendChild(info)
+          console.log(title)
+          console.log(info)
+        })
       })
-      .catch(err=>console.log(err))
+      .catch(err=>{console.log(err)
+        setVariant('danger')
+        var title = document.createTextNode(err.response.statusText || 'Network Error')
+        var info = document.createTextNode(err.response.data.warning||err.response.data.msg || 'Please check your network ')
+        handleShow().then(()=>{
+          document.getElementById('response-modal-title').appendChild(title)
+          document.getElementById('response-modal-info').appendChild(info)
+          console.log(title)
+          console.log(info)
+        })
+      })
   }
   
   return (
@@ -100,6 +151,25 @@ const Login = (props) => {
       </div>
     </div>
   </div>
+    {/*Modal for displaying response */}
+    <Modal
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={show} onHide={handleClose}
+            >
+            <Modal.Header closeButton>
+                <Modal.Title id="response-modal-title">
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p id='response-modal-info'>
+                </p>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant={variant} onClick={handleClose}>Close</Button>
+            </Modal.Footer>
+        </Modal>
     </div>
   )
 }
