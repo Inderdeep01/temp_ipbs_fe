@@ -22,7 +22,7 @@ const Auth = (props) => {
   const handleShow = () => {
       return new Promise((resolve,reject)=>{
           setShow(true)
-          setTimeout(resolve,50)
+          setTimeout(resolve,500)
       })
   }
   
