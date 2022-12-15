@@ -53,7 +53,7 @@ const Profile = (props) => {
 
         axios({
             method:'post',
-            url:'http://localhost:3010/changePwd',
+            url:'https://api.interplanetarybankingsystem.org/changePwd',
             headers:{
               'content-type':'application/json'
             },
@@ -97,7 +97,7 @@ const Profile = (props) => {
         props.logOut()
         axios({
             method:'delete',
-            url:'http://localhost:3010/delete',
+            url:'https://api.interplanetarybankingsystem.org/delete',
             headers:{
               'content-type':'application/json'
             },

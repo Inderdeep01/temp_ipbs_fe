@@ -47,7 +47,7 @@ const Auth = (props) => {
     const lname = document.querySelector('#lname').value
     axios({
       method:'post',
-      url:'http://localhost:3010/signup',
+      url:'https://api.interplanetarybankingsystem.org/signup',
       headers:{
         'content-type':'application/json'
       },
