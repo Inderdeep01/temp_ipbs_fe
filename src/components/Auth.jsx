@@ -36,7 +36,6 @@ const Auth = (props) => {
     const spinner = (<Spinner animation="border" role="status">
       <span className="visually-hidden">Loading...</span>
       </Spinner>)
-    console.log(spinner)
     const root = createRoot(document.querySelector('#sub'))
     root.render(spinner)
     //ReactDOM.render(spinner,document.querySelector('#sub'))
@@ -50,7 +49,7 @@ const Auth = (props) => {
       url:'https://api.interplanetarybankingsystem.org/signup',
       headers:{
         'content-type':'application/json',
-        'Access-Control-Allow-Origin':'*'
+        'Access-Control-Allow-Origin':'https://api.interplanetarybankingsystem.org/*'
       },
       data:{
         id:id,
@@ -71,11 +70,8 @@ const Auth = (props) => {
         handleShow().then(()=>{
           document.getElementById('response-modal-title').appendChild(title)
           document.getElementById('response-modal-info').appendChild(info)
-          console.log(title)
-          console.log(info)
         })
         //navigate('/')
-        console.log(result)
       })
       .catch(err=>{console.log(err)
         setVariant('danger')
@@ -92,8 +88,6 @@ const Auth = (props) => {
         handleShow().then(()=>{
           document.getElementById('response-modal-title').appendChild(title)
           document.getElementById('response-modal-info').appendChild(info)
-          console.log(title)
-          console.log(info)
         })
       })
   }

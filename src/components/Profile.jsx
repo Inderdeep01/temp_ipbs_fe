@@ -56,7 +56,7 @@ const Profile = (props) => {
             url:'https://api.interplanetarybankingsystem.org/changePwd',
             headers:{
               'content-type':'application/json',
-              'Access-Control-Allow-Origin':'*'
+              'Access-Control-Allow-Origin':'https://api.interplanetarybankingsystem.org/*'
             },
             data:{
               id: props.id,
@@ -64,7 +64,6 @@ const Profile = (props) => {
               newPwd: newpwd
             }
         }).then(result=>{
-            console.log(result)
             if(result.status>=200&&result.status<300){
                 setVariant('success')
             }
@@ -76,8 +75,6 @@ const Profile = (props) => {
             handleShow().then(()=>{
                 document.getElementById('response-modal-title').appendChild(title)
                 document.getElementById('response-modal-info').appendChild(info)
-                console.log(title)
-                console.log(info)
             })
         })
         .catch(err=>{
@@ -95,8 +92,6 @@ const Profile = (props) => {
             handleShow().then(()=>{
                 document.getElementById('response-modal-title').appendChild(title)
                 document.getElementById('response-modal-info').appendChild(info)
-                console.log(title)
-                console.log(info)
             })
         })
     }
@@ -109,7 +104,7 @@ const Profile = (props) => {
             url:'https://api.interplanetarybankingsystem.org/delete',
             headers:{
               'content-type':'application/json',
-              'Access-Control-Allow-Origin':'*'
+              'Access-Control-Allow-Origin':'https://api.interplanetarybankingsystem.org/*'
             },
             data:{
               id:props.id

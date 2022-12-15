@@ -4,8 +4,6 @@ import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 
 const Navbar = (props) => {
-  console.log('navbar')
-  console.log(props)
   var rightComponent = (
     <>
     <Link to='/login'><button id='login' className='btn'><i className="fa-sharp fa-solid fa-user-tie"></i>&nbsp; Login</button></Link>

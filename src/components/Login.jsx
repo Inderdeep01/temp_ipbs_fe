@@ -7,7 +7,6 @@ import { Modal,Button,Spinner} from 'react-bootstrap'
 import {createRoot} from 'react-dom/client'
 
 const Login = (props) => {
-  console.log(props)
   const navigate = useNavigate()
 
   // state and handlers for response modals
@@ -37,7 +36,6 @@ const Login = (props) => {
     const spinner = (<Spinner animation="border" role="status">
       <span className="visually-hidden">Loading...</span>
       </Spinner>)
-    console.log(spinner)
     const root = createRoot(document.querySelector('#sub'))
     root.render(spinner)
     const id = document.querySelector('#id').value
@@ -47,7 +45,7 @@ const Login = (props) => {
       url:'https://api.interplanetarybankingsystem.org/login',
       headers:{
         'content-type':'application/json',
-        'Access-Control-Allow-Origin':'*'
+        'Access-Control-Allow-Origin':'https://api.interplanetarybankingsystem.org/*'
       },
       data:{
         id:id,
@@ -63,14 +61,11 @@ const Login = (props) => {
         var title = document.createTextNode(result.statusText)
         var info = document.createTextNode(result.data.msg)
         //navigate('/profile')
-        console.log(result)
         const user = result.data.user
         props.success(user,id)
         handleShow().then(()=>{
           document.getElementById('response-modal-title').appendChild(title)
           document.getElementById('response-modal-info').appendChild(info)
-          console.log(title)
-          console.log(info)
         })
       })
       .catch(err=>{console.log(err)
@@ -88,8 +83,6 @@ const Login = (props) => {
         handleShow().then(()=>{
           document.getElementById('response-modal-title').appendChild(title)
           document.getElementById('response-modal-info').appendChild(info)
-          console.log(title)
-          console.log(info)
         })
       })
   }
