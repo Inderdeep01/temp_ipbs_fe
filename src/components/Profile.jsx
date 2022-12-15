@@ -55,7 +55,8 @@ const Profile = (props) => {
             method:'post',
             url:'https://api.interplanetarybankingsystem.org/changePwd',
             headers:{
-              'content-type':'application/json'
+              'content-type':'application/json',
+              'Access-Control-Allow-Origin':'*'
             },
             data:{
               id: props.id,
@@ -81,8 +82,8 @@ const Profile = (props) => {
         })
         .catch(err=>{
             setVariant('danger')
-            var title = document.createTextNode(err.response.statusText)
-            var info = document.createTextNode(err.response.data.msg)
+            var title = document.createTextNode(err.response.statusText || 'Error')
+            var info = document.createTextNode(err.response.data.msg || 'Could not update password')
             handleShow().then(()=>{
                 document.getElementById('response-modal-title').appendChild(title)
                 document.getElementById('response-modal-info').appendChild(info)
