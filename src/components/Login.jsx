@@ -78,12 +78,12 @@ const Login = (props) => {
         var title =''
         var info = ''
         try{
-          var title = document.createTextNode(err.response.statusText || 'Network Error')
-          var info = document.createTextNode(err.response.data.warning||err.response.data.msg || 'Please check your network ')
+          var title = document.createTextNode(err.response.statusText )
+          var info = document.createTextNode(err.response.data.warning||err.response.data.msg)
         }
         catch{
-          title = 'Error'
-          info = 'Please check your input and network'
+          title = document.createTextNode('Error')
+          info = document.createTextNode('Please check your input and network')
         }
         handleShow().then(()=>{
           document.getElementById('response-modal-title').appendChild(title)
