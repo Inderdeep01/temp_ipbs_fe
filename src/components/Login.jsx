@@ -75,8 +75,16 @@ const Login = (props) => {
       })
       .catch(err=>{console.log(err)
         setVariant('danger')
-        var title = document.createTextNode(err.response.statusText || 'Network Error')
-        var info = document.createTextNode(err.response.data.warning||err.response.data.msg || 'Please check your network ')
+        var title =''
+        var info = ''
+        try{
+          var title = document.createTextNode(err.response.statusText || 'Network Error')
+          var info = document.createTextNode(err.response.data.warning||err.response.data.msg || 'Please check your network ')
+        }
+        catch{
+          title = 'Error'
+          info = 'Please check your input and network'
+        }
         handleShow().then(()=>{
           document.getElementById('response-modal-title').appendChild(title)
           document.getElementById('response-modal-info').appendChild(info)
