@@ -22,7 +22,7 @@ const Auth = (props) => {
   const handleShow = () => {
       return new Promise((resolve,reject)=>{
           setShow(true)
-          setTimeout(resolve,500)
+          setTimeout(resolve,50)
       })
   }
   
@@ -49,7 +49,8 @@ const Auth = (props) => {
       method:'post',
       url:'https://api.interplanetarybankingsystem.org/signup',
       headers:{
-        'content-type':'application/json'
+        'content-type':'application/json',
+        'Access-Control-Allow-Origin':'*'
       },
       data:{
         id:id,

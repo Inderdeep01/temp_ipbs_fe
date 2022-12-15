@@ -28,7 +28,7 @@ const Profile = (props) => {
     const handleShow = () => {
         return new Promise((resolve,reject)=>{
             setShow(true)
-            setTimeout(resolve,500)
+            setTimeout(resolve,50)
         })
     }
 
@@ -100,7 +100,8 @@ const Profile = (props) => {
             method:'delete',
             url:'https://api.interplanetarybankingsystem.org/delete',
             headers:{
-              'content-type':'application/json'
+              'content-type':'application/json',
+              'Access-Control-Allow-Origin':'*'
             },
             data:{
               id:props.id
