@@ -68,7 +68,7 @@ const Login = (props) => {
           document.getElementById('response-modal-info').appendChild(info)
         })
       })
-      .catch(err=>{console.log(err)
+      .catch(err=>{
         setVariant('danger')
         var title =''
         var info = ''

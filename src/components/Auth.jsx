@@ -73,7 +73,7 @@ const Auth = (props) => {
         })
         //navigate('/')
       })
-      .catch(err=>{console.log(err)
+      .catch(err=>{
         setVariant('danger')
         var title =''
         var info = ''
