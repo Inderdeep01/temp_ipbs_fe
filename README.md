@@ -3,7 +3,7 @@
 This project is live on https://www.interplanetarybankingsystem.org/
 
 ## Built with 
-- [AWS] (https://aws.amazon.com/)
+- [AWS](https://aws.amazon.com/)
 - [React JS](https://reactjs.org/)
 - [Node JS](https://nodejs.org/) 
 - [Express JS](https://expressjs.com/)
