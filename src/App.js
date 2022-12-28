@@ -9,6 +9,8 @@ import Profile from './components/Profile';
 function App() {
   return (
     <div className="App">
+      <h1>Ganny Batish</h1>
+      <h1>Money Batish</h1>
       <Router>
         <Navbar/>
         <Routes>
